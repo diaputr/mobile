@@ -1,4 +1,4 @@
-# Flutter Basic
+# Flutter Fundamental
 
 * Nama  : Diah Putri Nofianti
 * NIM   : 2141720054
