@@ -15,4 +15,10 @@ A new Flutter project.
 
 ## Praktikum 4: Menerapkan Widget Material Design
 
-1. Cupertino Button dan Loading Bar
+* Scaffold Widget
+![Screenshot 4](images/04.png)
+
+
+* Dialog Alert
+![Screenshot 5](images/05.png)
+
