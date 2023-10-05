@@ -18,7 +18,8 @@ A new Flutter project.
 * Scaffold Widget
 ![Screenshot 4](images/04.png)
 
-
 * Dialog Alert
 ![Screenshot 5](images/05.png)
 
+* Input dan Selection Widget
+![Screenshot 6](images/06.png)
