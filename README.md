@@ -23,13 +23,13 @@ Teks yang ditampilkan dalam aplikasi berupa nama lengkap, lalu simpan file scree
 
 1. Cupertino Button dan Loading Bar
 * Buat file di `basic_widgets` > `loading_cupertino.dart`. Import stateless widget dari material dan cupertino. 
-
+![Screenshot 8](images/08.png)
 
 2. Floating Action Button (FAB)
 * Button widget terdapat beberapa macam pada flutter yaitu ButtonBar, DropdownButton, TextButton, FloatingActionButton, IconButton, OutlineButton, PopupMenuButton, dan ElevatedButton. 
 
 * Buat file di `basic_widgets` > `fab_widget.dart`. Import stateless widget dari material.
-
+![Screenshot 9](images/09.png)
 
 3. Scaffold Widget
 * Scaffold widget digunakan untuk mengatur tata letak sesuai dengan material design.
