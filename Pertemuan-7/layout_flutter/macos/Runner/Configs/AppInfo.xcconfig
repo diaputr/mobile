@@ -8,7 +8,7 @@
 PRODUCT_NAME = layout_flutter
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.layoutFlutter
+PRODUCT_BUNDLE_IDENTIFIER = io.diaputr.layoutFlutter
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 io.diaputr. All rights reserved.
