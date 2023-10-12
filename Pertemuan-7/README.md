@@ -5,6 +5,8 @@
 * Absen : 12
 * Kelas : TI-3A
 
-## Praktikum 2: Langkah Awal
-Teks yang ditampilkan dalam aplikasi berupa nama lengkap, lalu simpan file screenshot dengan nama `01.png` pada folder images (buat folder baru jika belum ada) di project `flutter_basic` ini.
+## Tampilan Akhir
 ![Screenshot 1](images/01.jpeg)
+
+## Praktikum 1: Implementasi Title Row
+![Screenshot 2](images/02.png)
