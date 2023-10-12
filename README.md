@@ -1,4 +1,4 @@
-# Flutter Fundamental
+# Flutter Fundamental Pertemuan 6
 
 * Nama  : Diah Putri Nofianti
 * NIM   : 2141720054
