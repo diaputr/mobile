@@ -20,14 +20,14 @@ class MyApp extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: const Text(
-                    'Wisata Gunung di Batu',
+                    'Wisata Air di Malang Selatan',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 Text(
-                  'Batu, Malang, Indonesia',
+                  'Pagelaran, Malang, Indonesia',
                   style: TextStyle(
                     color: Colors.grey[500],
                   ),
@@ -56,6 +56,16 @@ class MyApp extends StatelessWidget {
       ],
     );
 
+    Widget textSection = Container(
+      padding: const EdgeInsets.all(32),
+      child: const Text(
+        'Sumber Maron adalah kompleks tirta wisata yang berlokasi di Kecamatan Pagelaran, Kabupaten Malang. Jaraknya sekitar 5 kilometer di sebelah barat Kecamatan Gondanglegi, Kabupaten Malang. \n\nSumber Maron punya mata air jernih yang indah dipandang mata. Saking jernihnya, airnya sampai terlihat kehijauan jika dari kejauhan. Jika dilihat dari dekat, bebatuan di dasar airnya terlihat begitu jelas.'
+        '\n\nDiah Putri Nofianti (2141720054) 🙂',
+        softWrap: true,
+        textAlign: TextAlign.justify,
+      ),
+    );
+
     return MaterialApp(
       title: 'Flutter layout: Diah Putri Nofianti - 2141720054',
       home: Scaffold(
@@ -66,6 +76,7 @@ class MyApp extends StatelessWidget {
           children: [
             titleSection,
             buttonSection,
+            textSection,
           ],
         ),
       ),
