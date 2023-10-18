@@ -16,3 +16,6 @@
 
 ## Praktikum 3: Implementasi Text Section
 ![Screenshot 4](images/04.png)
+
+## Praktikum 4: Implementasi Image Section
+![Screenshot 5](images/05.png)
