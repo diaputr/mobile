@@ -10,3 +10,6 @@
 
 ## Praktikum 1: Implementasi Title Row
 ![Screenshot 2](images/02.png)
+
+## Praktikum 2: Implementasi Text Section
+![Screenshot 3](images/03.png)
