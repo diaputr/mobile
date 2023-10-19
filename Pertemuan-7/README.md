@@ -1,4 +1,4 @@
-# Flutter Fundamental Pertemuan 7
+# Layout & Navigasi Pertemuan 7
 
 * Nama  : Diah Putri Nofianti
 * NIM   : 2141720054
