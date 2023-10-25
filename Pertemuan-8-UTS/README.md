@@ -124,8 +124,6 @@ return Material(
 ```
 
 ### Hasil
-
-#### Kode
 * `home_page.dart`
 ```Javascript
 import 'package:belanja/models/item.dart';
