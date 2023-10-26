@@ -209,4 +209,4 @@ class ItemPage extends StatelessWidget {
 * Item Details
 ![Screenshot 2](images/02.png)
 
-## Tugas Praktikum 2: 
+## Tugas Praktikum 2
