@@ -16,7 +16,7 @@ Buat sebuah project baru Flutter dengan nama `belanja`.
 Buatlah dua buah file dart dengan nama `home_page.dart` dan `item_page.dart` pada folder `pages`.
 
 * `home_page.dart`
-```Javascript
+```dart
 class HomePage extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class HomePage extends StatelessWidget {
 ```
 
 * `item_page.dart`
-```Javascript
+```dart
 class ItemPage extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ItemPage extends StatelessWidget {
 ```
 
 ### Langkah 3: Lengkapi Kode di `main.dart`
-```Javascript
+```dart
 import 'package:belanja/pages/home_page.dart';
 import 'package:belanja/pages/item_page.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +56,7 @@ void main() {
 
 ### Langkah 4: Membuat data model
 Buat sebuah file dengan nama `item.dart` dan letakkan pada folder `models`.
-```Javascript
+```dart
 class Item {
   String name;
   int price;
@@ -71,7 +71,7 @@ class Item {
 ### Langkah 5: Lengkapi kode di class HomePage
 Pada halaman `HomePage` terdapat ListView widget. Sumber data ListView diambil dari model List dari object Item.
 
-```Javascript
+```dart
 class HomePage extends StatelessWidget {
   final List<Item> items = [
     Item(name: 'Sugar', price: 5000),
@@ -83,7 +83,7 @@ class HomePage extends StatelessWidget {
 ### Langkah 6: Membuat ListView dan itemBuilder
 Untuk menampilkan ListView pada praktikum ini digunakan itemBuilder. Data diambil dari definisi model yang telah dibuat sebelumnya.
 
-```Javascript
+```dart
 body: Container(
     margin: const EdgeInsets.all(8),
     child: ListView.builder(
@@ -117,7 +117,7 @@ body: Container(
 return Material(
     child: InkWell(
         onTap: () {
-            Navigator.pushNamed(context, '/item', arguments: item);
+            Navigator.pushNamed(context, '/item');
         },
     )
 )
@@ -125,7 +125,7 @@ return Material(
 
 ### Hasil
 * `home_page.dart`
-```Javascript
+```dart
 import 'package:belanja/models/item.dart';
 import 'package:flutter/material.dart';
 
@@ -150,7 +150,7 @@ class HomePage extends StatelessWidget {
             return Material(
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, '/item', arguments: item);
+                  Navigator.pushNamed(context, '/item');
                 },
                 child: Card(
                   child: Container(
@@ -179,15 +179,13 @@ class HomePage extends StatelessWidget {
 ```
 
 * `item_page.dart`
-```Javascript
+```dart
 import 'package:belanja/models/item.dart';
 import 'package:flutter/material.dart';
 
 class ItemPage extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    final item = ModalRoute.of(context)!.settings.arguments as Item;
-
+  Widget build(BuildContext context) {   
     return Scaffold(
       appBar: AppBar(
         title: const Text('Item Details'),
@@ -210,3 +208,40 @@ class ItemPage extends StatelessWidget {
 ![Screenshot 2](images/02.png)
 
 ## Tugas Praktikum 2
+
+### Langkah 1
+Tambahkan informasi arguments pada penggunaan Navigator.
+```dart
+Navigator.pushNamed(context, '/item', arguments: item);
+```
+
+### Langkah 2
+Tambahkan kode pada blok fungsi build dalam halaman ItemPage.
+```dart
+final itemArgs = ModalRoute.of(context)!.settings.arguments as Item;
+```
+
+### Langkah 3
+Tambahkan atribut foto produk, stok, dan rating. Ubahlah tampilan menjadi GridView seperti di aplikasi marketplace pada umumnya.
+* `item.dart`
+```dart
+class Item {
+  String name, img;
+  int price, stock;
+  double rating;
+
+  Item({
+    required this.name,
+    required this.price,
+    required this.img,
+    required this.stock,
+    required this.rating,
+  });
+}
+```
+
+### Langkah 4
+Silakan implementasikan Hero widget pada aplikasi belanja.
+
+### Langkah 5
+Tambahkan Nama dan NIM di footer.
