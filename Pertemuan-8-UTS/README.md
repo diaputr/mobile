@@ -6,6 +6,85 @@
 * Kelas : TI-3A
 
 ## Tugas Praktikum 1: Basic Layout Flutter
+Sumber: https://docs.flutter.dev/codelabs/layout-basics
+
+### Container Layout
+Container adalah widget dasar yang digunakan untuk mengatur tata letak dan dekorasi elemen-elemen lain dalam Flutter.
+```dart
+Container(
+  width: 200,
+  height: 100,
+  color: Colors.blue,
+  child: Center(
+    child: Text("Hello, Flutter!"),
+  ),
+)
+  ```
+
+### Row Layout
+Row adalah widget yang digunakan untuk mengatur tata letak elemen-elemen dalam satu baris.
+```dart
+Row(
+  mainAxisAlignment: MainAxisAlignment.spaceAround,
+  children: [
+    Icon(Icons.accessibility),
+    Icon(Icons.timer),
+    Icon(Icons.phone_android),
+    Icon(Icons.phone_iphone),
+  ],
+)
+```
+
+### Column Layout
+Column adalah widget yang digunakan untuk mengatur tata letak elemen-elemen dalam satu kolom.
+```dart
+Column(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  mainAxisSize: MainAxisSize.min,
+  children: [
+    Text(
+      'Diah Putri Nofianti',
+      style: Theme.of(context).textTheme.headlineSmall,
+    ),
+    const Text('2141720054'),
+  ],
+),
+```
+
+### Stack Layout
+Stack adalah widget yang digunakan untuk mengatur tata letak elemen-elemen dengan cara menumpuknya.
+```dart
+Stack(
+  children: <Widget>[
+    Container(
+      width: 200,
+      height: 200,
+      color: Colors.red,
+    ),
+    Container(
+      width: 150,
+      height: 150,
+      color: Colors.green,
+    ),
+    Container(
+      width: 100,
+      height: 100,
+      color: Colors.blue,
+    ),
+  ],
+)
+```
+
+### Image Widget
+Image adalah widget yang digunakan untuk menampilkan gambar.
+```dart
+Image.network(
+  "https://jti.polinema.ac.id/wp-content/themes/jti-polinema/images/misc/logo.png",  
+)
+```
+
+### Hasil
+![Screenshot 5](images/05.png)
 
 ## Praktikum 5: Membangun Navigasi di Flutter
 
