@@ -242,6 +242,43 @@ class Item {
 
 ### Langkah 4
 Silakan implementasikan Hero widget pada aplikasi belanja.
+```dart
+Hero(
+  tag: item.name,
+  child: AspectRatio(
+    aspectRatio: 1,
+    child: Image.asset(item.img, fit: BoxFit.cover),
+  ),
+),
+```
 
 ### Langkah 5
 Tambahkan Nama dan NIM di footer.
+```dart
+bottomNavigationBar: BottomAppBar(
+  child: Container(
+    padding: const EdgeInsets.all(16),
+    decoration: const BoxDecoration(
+      color: Colors.blue,
+    ),
+    child: const Row(
+      children: [
+        Text(
+            'Diah Putri Nofianti | 2141720054',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+        ),
+      ],
+    ),
+  ),
+),
+```
+
+### Hasil
+
+* Shopping List
+![Screenshot 3](images/03.png)
+
+* Item Details
+![Screenshot 4](images/04.png)

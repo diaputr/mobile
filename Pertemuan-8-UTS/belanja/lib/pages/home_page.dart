@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                   child: Column(children: [
                     Expanded(
                       child: Hero(
-                        tag: 'productImage${item.name}',
+                        tag: item.name,
                         child: AspectRatio(
                           aspectRatio: 1,
                           child: Image.asset(item.img, fit: BoxFit.cover),
@@ -69,6 +69,24 @@ class HomePage extends StatelessWidget {
             ),
           );
         },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
+            color: Colors.blue,
+          ),
+          child: const Row(
+            children: [
+              Text(
+                'Diah Putri Nofianti | 2141720054',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
