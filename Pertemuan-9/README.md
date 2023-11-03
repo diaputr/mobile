@@ -92,14 +92,53 @@ Container(
 1. **Yellow**
 * `Container` dengan latar belakang berwarna kuning muda.
 * Lebarnya ditentukan 50 pixel.
-* Di dalam `Container`, terdapat widget `RedTextWidget` yaitu widget khusus yang telah kita buat sebelumnya, dan di sini kita mengisinya dengan teks yang akan ditampilkan.
+* Di dalam `Container`, terdapat widget `RedTextWidget` yaitu widget khusus dengan menjadikan text berwarna **merah** yang telah dibuat sebelumnya, dan di sini akan diisi dengan teks yang akan ditampilkan.
 
 2. **Green**
 * Ini juga `Container`, tetapi dengan latar belakang berwarna hijau muda.
 * Lebarnya 100 pixel.
-* Di dalam `Container` ini, kita memiliki widget `Text` yang langsung menampilkan teks yang sama seperti sebelumnya.
+* Di dalam `Container` ini, terdapat widget `Text` yang langsung menampilkan teks yang sama seperti sebelumnya.
 
 3. **Perbedaan**
-* Widget pertama menggunakan `RedTextWidget`, yang kita buat khusus untuk menampilkan teks dengan warna merah. Widget kedua, hanya menggunakan widget bawaan `Text` untuk menampilkan teks tanpa pengaturan warna khusus. Jadi, widget pertama akan menampilkan teks dengan warna merah, sementara widget kedua akan menampilkan teks dengan warna default.
+* Widget pertama menggunakan `RedTextWidget`, yang dibuat khusus untuk menampilkan teks dengan warna merah. Widget kedua, hanya menggunakan widget bawaan `Text` untuk menampilkan teks tanpa pengaturan warna khusus. Jadi, widget pertama akan menampilkan teks dengan warna merah, sementara widget kedua akan menampilkan teks dengan warna default.
+
+## Hasil
+![Screenshot 3](images/03.jpg)
 
 ### ***Jelaskan maksud dari tiap parameter yang ada di dalam plugin auto_size_text berdasarkan tautan pada dokumentasi [ini](https://pub.dev/documentation/auto_size_text/latest/)!***
+
+1. **key:** Mengendalikan bagaimana satu widget menggantikan widget lain dalam pohon (tree), digunakan untuk mengidentifikasi widget secara unik.
+
+2. **textKey:** Menentukan kunci (key) untuk widget `Text` yang dihasilkan.
+
+3. **style:** Digunakan untuk mengatur gaya (style) teks seperti jenis huruf, ukuran, warna, dan lainnya.
+
+4. **minFontSize:** Menentukan ukuran teks minimum yang akan digunakan saat menyesuaikan ukuran teks secara otomatis. Dapat diabaikan jika `presetFontSizes` diatur.
+
+5. **maxFontSize:** Menentukan ukuran teks maksimum yang akan digunakan saat menyesuaikan ukuran teks secara otomatis.
+
+6. **stepGranularity:** Ukuran langkah di mana ukuran huruf disesuaikan dengan batasan.
+
+7. **presetFontSizes:** Memungkinkan menentukan ukuran huruf yang sudah ditentukan sebelumnya. Harus diatur dalam urutan menurun (dari besar ke kecil).
+
+8. **group:** Digunakan untuk menyelaraskan ukuran beberapa `AutoSizeText`.
+
+9. **textAlign:** Menentukan cara teks diatur secara horizontal, seperti tengah, kiri, atau kanan.
+
+10. **textDirection:** Menentukan arah teks, yang memengaruhi bagaimana nilai `textAlign` seperti `TextAlign.start` dan `TextAlign.end` diinterpretasikan.
+
+11. **locale:** Digunakan untuk memilih jenis huruf yang benar saat karakter Unicode yang sama dapat ditampilkan secara berbeda tergantung pada budaya (locale).
+
+12. **softWrap:** Mengontrol apakah teks harus mengalami pemisahan pada batas baris yang lunak.
+
+13. **wrapWords:** Menentukan apakah kata-kata yang tidak muat dalam satu baris harus dipisahkan atau tidak. Secara default, nilainya adalah `true` agar berperilaku seperti widget `Text`.
+
+14. **overflow:** Menentukan cara penanganan tampilan teks yang berlebihan (overflow).
+
+15. **overflowReplacement:** Jika teks berlebihan dan tidak muat dalam batasan, widget ini akan ditampilkan sebagai pengganti.
+
+16. **textScaleFactor:** Mengontrol berapa banyak pixel huruf yang digunakan untuk setiap pixel logis. Juga memengaruhi `minFontSize`, `maxFontSize`, dan `presetFontSizes`.
+
+17. **maxLines:** Menentukan jumlah maksimum baris yang dapat digunakan oleh teks.
+
+18. **semanticsLabel:** Label alternatif untuk keperluan aksesibilitas (semantics).
