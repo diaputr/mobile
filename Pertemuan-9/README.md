@@ -13,8 +13,9 @@ Buat sebuah project flutter baru dengan nama `flutter_plugin_pubdev`.
 ```dart
 flutter pub add auto_size_text
 ```
-*
+#### Output
 ![Screenshot 1](images/01.jpg)
+#### Terminal
 ![Screenshot 2](images/02.jpg)
 * Penjelasan: 
 
