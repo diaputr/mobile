@@ -10,7 +10,12 @@
 Buat sebuah project flutter baru dengan nama `flutter_plugin_pubdev`.
 
 ### Langkah 2: Menambahkan Plugin
-
+```dart
+flutter pub add auto_size_text
+```
+*
+![Screenshot 1](images/01.jpg)
+![Screenshot 2](images/02.jpg)
 * Penjelasan: 
 
 ### Langkah 3: Buat file `red_text_widget.dart`
