@@ -6,11 +6,8 @@
 * Kelas : TI-3A
 
 ## Praktikum 1: Dasar State dengan Model-View
-
-### 1. Langkah Praktikum
-
-1. Buat project `master_plan`
-2. Membuat model `task.dart`
+### 1. Buat project `master_plan`
+### 2. Membuat model `task.dart`
 ```dart
 class Task {
   final String description;
@@ -19,7 +16,7 @@ class Task {
   const Task({this.description = '', this.complete = false});
 }
 ```
-3. Buat file `plan.dart`
+### 3. Buat file `plan.dart`
 ```dart
 import './task.dart';
 
@@ -30,12 +27,12 @@ class Plan {
   const Plan({this.name = '', this.tasks = const []});
 }
 ```
-4. Buat file `data_layer.dart`
+### 4. Buat file `data_layer.dart`
 ```dart
 export 'plan.dart';
 export 'task.dart';
 ```
-5. Isi file `main.dart`
+### 5. Isi file `main.dart`
 ```dart
 import 'package:flutter/material.dart';
 import './views/plan_screen.dart';
@@ -54,7 +51,7 @@ class MasterPlanApp extends StatelessWidget {
   }
 }
 ```
-6. Buat `plan_screen.dart`
+### 6. Buat `plan_screen.dart`
 ```dart
 import '../models/data_layer.dart';
 import 'package:flutter/material.dart';
@@ -156,3 +153,14 @@ class _PlanScreenState extends State<PlanScreen> {
 ```
 ### Hasil
 ![Screenshot 1](images/01.png)
+
+* Jelaskan maksud dari langkah membuat file `data_layer.dart`! Mengapa dilakukan demikian?
+
+* Mengapa perlu variabel `plan` di dalam `plan_screen.dart`? Mengapa dibuat konstanta?
+
+* Apa kegunaan method `initState()` dan `dispose()` dalam lifecyle state ?
+
+* Tampilkan hasil praktikum ini, kemudian jelaskan apa yang telah dibuat!
+
+
+## Praktikum 2: Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier
