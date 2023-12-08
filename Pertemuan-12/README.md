@@ -158,9 +158,162 @@ class _PlanScreenState extends State<PlanScreen> {
 
 * Mengapa perlu variabel `plan` di dalam `plan_screen.dart`? Mengapa dibuat konstanta?
 
-* Apa kegunaan method `initState()` dan `dispose()` dalam lifecyle state ?
+* Apa kegunaan method `initState()` dan `dispose()` dalam *lifecyle state*?
 
 * Tampilkan hasil praktikum ini, kemudian jelaskan apa yang telah dibuat!
 
 
 ## Praktikum 2: Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier
+### 1. Buat file `plan_provider.dart`
+```dart
+import 'package:flutter/material.dart';
+import '../models/data_layer.dart';
+
+class PlanProvider extends InheritedNotifier<ValueNotifier<Plan>> {
+  const PlanProvider({super.key, required Widget child, required
+   ValueNotifier<Plan> notifier})
+  : super(child: child, notifier: notifier);
+
+  static ValueNotifier<Plan> of(BuildContext context) {
+   return context.
+    dependOnInheritedWidgetOfExactType<PlanProvider>()!.notifier!;
+  }
+}
+```
+### 2. Edit `main.dart`
+```dart
+return MaterialApp(
+  theme: ThemeData(primarySwatch: Colors.purple),
+  home: PlanProvider(
+    notifier: ValueNotifier<Plan>(const Plan()),
+    child: const PlanScreen(),
+   ),
+);
+```
+### 3. Tambah method pada model `plan.dart`
+```dart
+int get completedCount => tasks
+  .where((task) => task.complete)
+  .length;
+
+String get completenessMessage =>
+  '$completedCount out of ${tasks.length} tasks';
+```
+### 4. Edit `plan_screen.dart`
+```dart
+import 'package:master_plan/provider/plan_provider.dart';
+import '../models/data_layer.dart';
+import 'package:flutter/material.dart';
+
+class PlanScreen extends StatefulWidget {
+  const PlanScreen({super.key});
+  @override
+  State createState() => _PlanScreenState();
+}
+
+class _PlanScreenState extends State<PlanScreen> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController()
+      ..addListener(() {
+        FocusScope.of(context).requestFocus(FocusNode());
+      });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Master Plan Puput')),
+      body: ValueListenableBuilder<Plan>(
+        valueListenable: PlanProvider.of(context),
+        builder: (context, plan, child) {
+          return Column(
+            children: [
+              Expanded(child: _buildList(plan)),
+              SafeArea(
+                child: Text(plan.completenessMessage),
+              )
+            ],
+          );
+        },
+      ),
+      floatingActionButton: _buildAddTaskButton(context),
+    );
+  }
+
+  Widget _buildAddTaskButton(BuildContext context) {
+    ValueNotifier<Plan> planNotifier = PlanProvider.of(context);
+    return FloatingActionButton(
+      child: const Icon(Icons.add),
+      onPressed: () {
+        Plan currentPlan = planNotifier.value;
+        planNotifier.value = Plan(
+          name: currentPlan.name,
+          tasks: List<Task>.from(currentPlan.tasks)..add(const Task()),
+        );
+      },
+    );
+  }
+
+  Widget _buildList(Plan plan) {
+    return ListView.builder(
+      controller: scrollController,
+      itemCount: plan.tasks.length,
+      itemBuilder: (context, index) =>
+          _buildTaskTile(plan.tasks[index], index, context),
+    );
+  }
+
+  Widget _buildTaskTile(Task task, int index, BuildContext context) {
+    ValueNotifier<Plan> planNotifier = PlanProvider.of(context);
+    return ListTile(
+      leading: Checkbox(
+          value: task.complete,
+          onChanged: (selected) {
+            Plan currentPlan = planNotifier.value;
+            planNotifier.value = Plan(
+              name: currentPlan.name,
+              tasks: List<Task>.from(currentPlan.tasks)
+                ..[index] = Task(
+                  description: task.description,
+                  complete: selected ?? false,
+                ),
+            );
+          }),
+      title: TextFormField(
+        initialValue: task.description,
+        onChanged: (text) {
+          Plan currentPlan = planNotifier.value;
+          planNotifier.value = Plan(
+            name: currentPlan.name,
+            tasks: List<Task>.from(currentPlan.tasks)
+              ..[index] = Task(
+                description: text,
+                complete: task.complete,
+              ),
+          );
+        },
+      ),
+    );
+  }
+}
+```
+### Hasil
+
+* Jelaskan mana yang dimaksud `InheritedWidget`! Mengapa yang digunakan `InheritedNotifier`?
+
+* Jelaskan maksud dari method `completedCount()` dan `completenessMessage()`! Mengapa dilakukan demikian?
+
+* Capture hasil, kemudian jelaskan apa yang telah dibuat!
+
+
+## Praktikum 3: Membuat State di Multiple Screens
