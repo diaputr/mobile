@@ -308,6 +308,7 @@ class _PlanScreenState extends State<PlanScreen> {
 }
 ```
 ### Hasil
+![Screenshot 2](images/02.png)
 
 * Jelaskan mana yang dimaksud `InheritedWidget`! Mengapa yang digunakan `InheritedNotifier`?
 
