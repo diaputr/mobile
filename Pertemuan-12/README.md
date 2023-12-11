@@ -318,3 +318,254 @@ class _PlanScreenState extends State<PlanScreen> {
 
 
 ## Praktikum 3: Membuat State di Multiple Screens
+### 1. Edit `plan_provider.dart`
+```dart
+class PlanProvider extends
+InheritedNotifier<ValueNotifier<List<Plan>>> {
+  const PlanProvider({super.key, required Widget child, required
+ValueNotifier<List<Plan>> notifier})
+     : super(child: child, notifier: notifier);
+
+  static ValueNotifier<List<Plan>> of(BuildContext context) {
+    return context.
+dependOnInheritedWidgetOfExactType<PlanProvider>()!.notifier!;
+  }
+}
+```
+### 2. Edit `main.dart`
+```dart
+@override
+Widget build(BuildContext context) {
+  return PlanProvider(
+    notifier: ValueNotifier<List<Plan>>(const []),
+    child: MaterialApp(
+      title: 'State management app',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const PlanScreen(),
+    ),
+  );
+}
+```
+### 3. Edit `plan_screen.dart`
+```dart
+import 'package:master_plan/provider/plan_provider.dart';
+import '../models/data_layer.dart';
+import 'package:flutter/material.dart';
+
+class PlanScreen extends StatefulWidget {
+  final Plan plan;
+  const PlanScreen({super.key, required this.plan});
+
+  @override
+  State createState() => _PlanScreenState();
+}
+
+class _PlanScreenState extends State<PlanScreen> {
+  late ScrollController scrollController;
+  Plan get plan => widget.plan;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController()
+      ..addListener(() {
+        FocusScope.of(context).requestFocus(FocusNode());
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    ValueNotifier<List<Plan>> plansNotifier = PlanProvider.of(context);
+
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.plan.name)),
+      body: ValueListenableBuilder<List<Plan>>(
+        valueListenable: plansNotifier,
+        builder: (context, plans, child) {
+          Plan currentPlan = plans.firstWhere((p) => p.name == plan.name);
+          return Column(
+            children: [
+              Expanded(child: _buildList(currentPlan)),
+              SafeArea(child: Text(currentPlan.completenessMessage)),
+            ],
+          );
+        },
+      ),
+      floatingActionButton: _buildAddTaskButton(
+        context,
+      ),
+    );
+  }
+
+  Widget _buildAddTaskButton(BuildContext context) {
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
+    return FloatingActionButton(
+      child: const Icon(Icons.add),
+      onPressed: () {
+        Plan currentPlan = plan;
+        int planIndex =
+            planNotifier.value.indexWhere((p) => p.name == currentPlan.name);
+        List<Task> updatedTasks = List<Task>.from(currentPlan.tasks)
+          ..add(const Task());
+        planNotifier.value = List<Plan>.from(planNotifier.value)
+          ..[planIndex] = Plan(
+            name: currentPlan.name,
+            tasks: updatedTasks,
+          );
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _buildList(Plan plan) {
+    return ListView.builder(
+      controller: scrollController,
+      itemCount: plan.tasks.length,
+      itemBuilder: (context, index) =>
+          _buildTaskTile(plan.tasks[index], index, context),
+    );
+  }
+
+  Widget _buildTaskTile(Task task, int index, BuildContext context) {
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
+
+    return ListTile(
+      leading: Checkbox(
+          value: task.complete,
+          onChanged: (selected) {
+            Plan currentPlan = plan;
+            int planIndex = planNotifier.value
+                .indexWhere((p) => p.name == currentPlan.name);
+            planNotifier.value = List<Plan>.from(planNotifier.value)
+              ..[planIndex] = Plan(
+                name: currentPlan.name,
+                tasks: List<Task>.from(currentPlan.tasks)
+                  ..[index] = Task(
+                    description: task.description,
+                    complete: selected ?? false,
+                  ),
+              );
+          }),
+      title: TextFormField(
+        initialValue: task.description,
+        onChanged: (text) {
+          Plan currentPlan = plan;
+          int planIndex =
+              planNotifier.value.indexWhere((p) => p.name == currentPlan.name);
+          planNotifier.value = List<Plan>.from(planNotifier.value)
+            ..[planIndex] = Plan(
+              name: currentPlan.name,
+              tasks: List<Task>.from(currentPlan.tasks)
+                ..[index] = Task(
+                  description: text,
+                  complete: task.complete,
+                ),
+            );
+        },
+      ),
+    );
+  }
+}
+```
+### 4. Buat file `plan_creator_screen.dart`
+```dart
+import 'package:flutter/material.dart';
+import 'package:master_plan/models/plan.dart';
+import 'package:master_plan/provider/plan_provider.dart';
+import 'package:master_plan/views/plan_screen.dart';
+
+class PlanCreatorScreen extends StatefulWidget {
+  const PlanCreatorScreen({super.key});
+
+  @override
+  State<PlanCreatorScreen> createState() => _PlanCreatorScreenState();
+}
+
+class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Master Plans Puput')),
+      body: Column(children: [
+        _buildListCreator(),
+        Expanded(child: _buildMasterPlans())
+      ]),
+    );
+  }
+
+  Widget _buildListCreator() {
+    return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Material(
+          color: Theme.of(context).cardColor,
+          elevation: 10,
+          child: TextField(
+              controller: textController,
+              decoration: const InputDecoration(
+                  labelText: 'Tambahkan rencana',
+                  contentPadding: EdgeInsets.all(20)),
+              onEditingComplete: addPlan),
+        ));
+  }
+
+  void addPlan() {
+    final text = textController.text;
+    if (text.isEmpty) {
+      return;
+    }
+    final plan = Plan(name: text, tasks: []);
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
+    planNotifier.value = List<Plan>.from(planNotifier.value)..add(plan);
+    textController.clear();
+    FocusScope.of(context).requestFocus(FocusNode());
+    setState(() {});
+  }
+
+  Widget _buildMasterPlans() {
+    ValueNotifier<List<Plan>> planNotifier = PlanProvider.of(context);
+    List<Plan> plans = planNotifier.value;
+
+    if (plans.isEmpty) {
+      return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Icon(Icons.note, size: 100, color: Colors.grey),
+            Text('Kamu belum memiliki rencana apapun',
+                style: Theme.of(context).textTheme.titleLarge)
+          ]);
+    }
+    return ListView.builder(
+        itemCount: plans.length,
+        itemBuilder: (context, index) {
+          final plan = plans[index];
+          return ListTile(
+              title: Text(plan.name),
+              subtitle: Text(plan.completenessMessage),
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => PlanScreen(
+                          plan: plan,
+                        )));
+              });
+        });
+  }
+}
+```
+### Hasil
+![Screenshot 3](images/03.png)
+
+### Berdasarkan praktikum yang telah dilakukan, jelaskan maksud dari gambar diagram berikut ini!
+![Screenshot 4](images/04.png)
+* Jawab
+
+* Capture hasil, kemudian jelaskan apa yang telah dibuat!
