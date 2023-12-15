@@ -154,14 +154,18 @@ class _PlanScreenState extends State<PlanScreen> {
 ### Hasil
 ![Screenshot 1](images/01.png)
 
-* Jelaskan maksud dari langkah membuat file `data_layer.dart`! Mengapa dilakukan demikian?
+#### - Berdasarkan hasil dari praktikum ini, jelaskan apa yang telah dibuat!
 
-* Mengapa perlu variabel `plan` di dalam `plan_screen.dart`? Mengapa dibuat konstanta?
+#### - Jelaskan maksud dari langkah membuat file `data_layer.dart`! Mengapa dilakukan demikian?
+ Membuat file `data_layer.dart` bertujuan untuk menggabungkan dan mengekspor model data ke dalam satu file, menyederhanakan proses impor dan meningkatkan keterbacaan kode dalam pengembangan aplikasi. Dengan langkah ini, pengelolaan data layer menjadi lebih efisien dan ringkas.
 
-* Apa kegunaan method `initState()` dan `dispose()` dalam *lifecyle state*?
+#### - Mengapa perlu variabel `plan` di dalam `plan_screen.dart`? Mengapa dibuat konstanta?
+Variabel `plan` di dalam `plan_screen.dart` digunakan untuk menyimpan instance dari model `Plan`, yang mewakili rencana atau tugas-tugas dalam aplikasi. Penggunaan konstanta (`const`) pada inisialisasi `plan` menunjukkan bahwa objek `Plan` tersebut tetap tidak berubah setelah dibuat. Hal ini dapat bermanfaat jika kita ingin memastikan bahwa objek `plan` tidak dapat diubah nilainya setelah instansiasi, menghindari perubahan tidak disengaja dan memastikan kestabilan data pada tingkat aplikasi.
 
-* Tampilkan hasil praktikum ini, kemudian jelaskan apa yang telah dibuat!
+#### - Apa kegunaan method `initState()` dan `dispose()` dalam *lifecyle state*?
+* `initState()` digunakan untuk melakukan inisialisasi suatu objek state sebelum widget tersebut dibangun. Metode ini dipanggil hanya sekali saat widget pertama kali dibuat, merupakan tempat yang baik untuk melakukan pekerjaan inisialisasi yang dibutuhkan, seperti menginisialisasi variabel.
 
+* `dispose()` adalah metode yang dipanggil ketika objek state tersebut dihapus dari widget tree. Terjadi ketika widget dihapus dari tampilan atau ketika widget induknya dihapus. Metode ini berguna untuk membersihkan atau melepaskan sumber daya yang telah dialokasikan oleh objek state.
 
 ## Praktikum 2: Mengelola Data Layer dengan InheritedWidget dan InheritedNotifier
 ### 1. Buat file `plan_provider.dart`
@@ -310,11 +314,11 @@ class _PlanScreenState extends State<PlanScreen> {
 ### Hasil
 ![Screenshot 2](images/02.png)
 
-* Jelaskan mana yang dimaksud `InheritedWidget`! Mengapa yang digunakan `InheritedNotifier`?
+#### Jelaskan mana yang dimaksud `InheritedWidget`! Mengapa yang digunakan `InheritedNotifier`?
 
-* Jelaskan maksud dari method `completedCount()` dan `completenessMessage()`! Mengapa dilakukan demikian?
+#### Jelaskan maksud dari method `completedCount()` dan `completenessMessage()`! Mengapa dilakukan demikian?
 
-* Capture hasil, kemudian jelaskan apa yang telah dibuat!
+#### Capture hasil, kemudian jelaskan apa yang telah dibuat!
 
 
 ## Praktikum 3: Membuat State di Multiple Screens
@@ -568,4 +572,4 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
 ![Screenshot 4](images/04.png)
 * Jawab
 
-* Capture hasil, kemudian jelaskan apa yang telah dibuat!
+#### Capture hasil, kemudian jelaskan apa yang telah dibuat!
