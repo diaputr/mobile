@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -33,35 +32,39 @@ class FuturePage extends StatefulWidget {
 
 class _FuturePageState extends State<FuturePage> {
   String result = '';
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Back to the Future'),
+        title: const Text('Back from the Future'),
       ),
       body: Center(
         child: Column(children: [
           const Spacer(),
           ElevatedButton(
-            child: const Text('Get Future'),
+            child: const Text('GO!'),
             onPressed: () {
-              setState(() {});
-              getData().then((value) {
-                setState(() {
-                  result = value.body.toString().substring(0, 450);
-                  setState(() {});
-                }).catchError((_) {
-                  result = 'An error occurred.';
-                  setState(() {});
-                });
+              setState(() {
+                isLoading = true;
               });
+              Future.delayed(const Duration(seconds: 1)).then(((value) {
+                getData().then((value) {
+                  result = value.body.toString().substring(0, 450);
+                  setState(() {
+                    isLoading = false;
+                  });
+                }).catchError((e) {
+                  result = "An error occured $e";
+                  setState(() {
+                    isLoading = false;
+                  });
+                });
+              }));
             },
           ),
           const Spacer(),
-          Text(result),
-          const Spacer(),
-          const CircularProgressIndicator(),
+          isLoading ? const CircularProgressIndicator() : Text(result),
           const Spacer(),
         ]),
       ),
@@ -70,8 +73,8 @@ class _FuturePageState extends State<FuturePage> {
 
   Future<Response> getData() async {
     const authority = 'www.googleapis.com';
-    const path = '/books/v1/volumes/junbDwAAQBAJ';
+    const path = '/books/v1/volumes/EoNqEAAAQBAJ';
     Uri url = Uri.https(authority, path);
-    return http.get(url);
+    return await http.get(url);
   }
 }
