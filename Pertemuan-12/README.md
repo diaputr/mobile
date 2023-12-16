@@ -155,6 +155,7 @@ class _PlanScreenState extends State<PlanScreen> {
 ![Screenshot 1](images/01.png)
 
 #### - Berdasarkan hasil dari praktikum ini, jelaskan apa yang telah dibuat!
+Dalam praktikum ini, telah dibuat sebuah aplikasi Flutter bernama Mmaster Plan yang mengimplementasikan dasar-dasar State dengan Model-View. Langkah-langkah yang diambil mencakup pembuatan model untuk tugas (`task.dart`) dan rencana (`plan.dart`), penyusunan data layer dalam satu file (`data_layer.dart`), serta pembuatan antarmuka pengguna menggunakan widget seperti `PlanScreen`, `ListView`, `FloatingActionButton`, dan lainnya. Aplikasi ini memungkinkan pengguna untuk menambahkan rencana, menandai tugas sebagai selesai atau belum selesai, serta melakukan scrolling pada daftar tugas. Selain itu, ditambahkan fitur untuk menghilangkan fokus dari TextField saat dilakukan scroll, meningkatkan pengalaman pengguna, terutama pada platform iOS.
 
 #### - Jelaskan maksud dari langkah membuat file `data_layer.dart`! Mengapa dilakukan demikian?
  Membuat file `data_layer.dart` bertujuan untuk menggabungkan dan mengekspor model data ke dalam satu file, menyederhanakan proses impor dan meningkatkan keterbacaan kode dalam pengembangan aplikasi. Dengan langkah ini, pengelolaan data layer menjadi lebih efisien dan ringkas.
@@ -314,12 +315,16 @@ class _PlanScreenState extends State<PlanScreen> {
 ### Hasil
 ![Screenshot 2](images/02.png)
 
-#### Jelaskan mana yang dimaksud `InheritedWidget`! Mengapa yang digunakan `InheritedNotifier`?
+#### - Berdasarkan hasil, jelaskan apa yang telah dibuat!
+Pada praktikum kedua, terjadi peningkatan dalam manajemen data dan state aplikasi. Perubahan utama termasuk penambahan `PlanProvider`, penyedia data yang menggantikan penggunaan variabel `plan`. `PlanProvider` diintegrasikan ke tingkat paling atas aplikasi dan memberikan akses yang mudah ke state `Plan` kepada widget di bawahnya. Selain itu, model `Plan` diperbarui dengan penambahan dua method, yaitu `completedCount` dan `completenessMessage`. Perubahan signifikan juga terlihat pada `PlanScreen`, di mana widget-widget yang berinteraksi dengan state mengadopsi `PlanProvider` dan `ValueNotifier`. Penggunaan `ValueListenableBuilder` memungkinkan pemantauan perubahan pada `ValueNotifier`, memberikan tampilan yang dinamis dengan informasi kelengkapan tugas di bagian bawah layar.
 
-#### Jelaskan maksud dari method `completedCount()` dan `completenessMessage()`! Mengapa dilakukan demikian?
+#### - Jelaskan mana yang dimaksud `InheritedWidget`! Mengapa yang digunakan `InheritedNotifier`?
+* `InheritedWidget` adalah sebuah widget dalam Flutter yang memungkinkan data dapat diwariskan ke widget di dalam tree widget tanpa harus melewati widget satu per satu. Dengan menggunakan `InheritedWidget`, data dapat diakses oleh widget di berbagai bagian dalam widget tree tanpa perlu menyusun properti data ke setiap widget. 
 
-#### Capture hasil, kemudian jelaskan apa yang telah dibuat!
+* `InheritedNotifier` digunakan karena `ValueNotifier` sebagai bagian dari `InheritedWidget`. `ValueNotifier` adalah objek yang dapat mendeteksi perubahan nilai dan memberi tahu widget yang mengandungnya untuk merender ulang ketika nilai berubah. Dengan menggabungkan `ValueNotifier` dalam `InheritedNotifier`, kita dapat mengakses dan mengupdate nilai di seluruh widget tree.
 
+#### - Jelaskan maksud dari method `completedCount()` dan `completenessMessage()`! Mengapa dilakukan demikian?
+Method `completedCount()` pada class `Plan` digunakan untuk menghitung jumlah tugas yang sudah selesai (yang memiliki atribut `complete` bernilai `true`). Sedangkan method `completenessMessage()` memberikan pesan tentang sejauh mana progres dalam menyelesaikan tugas, menampilkan jumlah tugas yang sudah selesai dari total tugas yang ada. Penggunaan kedua method ini memungkinkan untuk memberikan informasi tentang kemajuan suatu rencana dengan cara yang mudah dimengerti, memberikan insight kepada pengguna mengenai sejauh mana tugas-tugas dalam rencana tersebut telah diselesaikan.
 
 ## Praktikum 3: Membuat State di Multiple Screens
 ### 1. Edit `plan_provider.dart`
@@ -568,8 +573,9 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
 ### Hasil
 ![Screenshot 3](images/03.png)
 
-### Berdasarkan praktikum yang telah dilakukan, jelaskan maksud dari gambar diagram berikut ini!
-![Screenshot 4](images/04.png)
-* Jawab
+#### - Berdasarkan hasil, jelaskan apa yang telah dibuat!
+Pada praktikum 3, dilakukan perluasan aplikasi Master Plan dengan menambahkan kemampuan untuk mengelola lebih dari satu rencana (Plan). Perubahan utama termasuk penyempurnaan pada `PlanProvider` untuk menangani List Plan, penyesuaian di `main.dart` untuk mendukung perubahan tersebut, dan penambahan variabel serta atribut pada `PlanScreen` untuk mengakomodasi rencana yang akan ditampilkan. Selanjutnya, pada PlanScreen, metode `_buildAddTaskButton` dan `_buildTaskTile` diperbarui untuk berinteraksi dengan List Plan yang diakses melalui `PlanProvider`. Selain itu, dilakukan penambahan `PlanCreatorScreen` yang memungkinkan pengguna menambahkan rencana baru. Secara keseluruhan, perubahan ini memungkinkan pengelolaan lebih dari satu rencana dalam aplikasi, meningkatkan fungsionalitas dan fleksibilitas penggunaan Master Plan.
 
-#### Capture hasil, kemudian jelaskan apa yang telah dibuat!
+### - Berdasarkan praktikum yang telah dilakukan, jelaskan maksud dari gambar diagram berikut ini!
+![Screenshot 4](images/04.png)
+* Diagram ini memvisualisasikan struktur dan hubungan antara komponen-komponen dalam suatu aplikasi material. Fungsi utama Material App adalah sebagai kelas dasar yang memberikan tema dan perilaku dasar untuk seluruh aplikasi. Plan Provider bertanggung jawab menyimpan dan mengelola data rencana. Saat Plan Screen diakses, data dari Plan Provider digunakan untuk menampilkan informasi terkait rencana. Sementara itu, Plan Creator Screen berfungsi sebagai antarmuka untuk membuat rencana baru. Proses dimulai dengan pembuatan Material App sebagai landasan aplikasi. Ketika pengguna memilih opsi tambah, Navigator Push digunakan untuk beralih ke Plan Creator Screen, tempat pengguna dapat menginput informasi rencana baru. Setelah pembuatan, data rencana disimpan oleh Plan Provider. Proses navigasi menggunakan Navigator Push memungkinkan perpindahan antara layar-layar aplikasi, seperti kembali ke layar utama saat pengguna menekan tombol "Kembali" di Plan Creator Screen.
