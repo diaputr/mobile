@@ -250,11 +250,11 @@ Perbedaan ini memberikan perlindungan lebih terhadap kesalahan yang mungkin terj
 ### Langkah 1: Buka file `main.dart`
 ```dart
 void returnFG() {
-    final futures = Future.wait<int>([
-      returnOneAsync(),
-      returnTwoAsync(),
-      returnThreeAsync(),
-    ]);
+    FutureGroup<int> futureGroup = FutureGroup<int>();
+    futureGroup.add(returnOneAsync());
+    futureGroup.add(returnTwoAsync());
+    futureGroup.add(returnThreeAsync());
+    futureGroup.close();
     futures.then((value) {
       int total = 0;
       for (var element in value) {
@@ -284,4 +284,6 @@ final futures = Future.wait<int>([
 ```
 
 #### Jelaskan maksud perbedaan kode langkah 1 dan 3!
-Perbedaan antara langkah 1 dan langkah 3 terletak pada penamaan variabel yang digunakan untuk menyimpan hasil dari `Future.wait`. Pada langkah 1, variabel disebut `futures`, sedangkan pada langkah 3, variabel disebut `futureGroup`. Meskipun fungsinya sama, yaitu menyimpan hasil dari `Future.wait`, perbedaan penamaan tidak memengaruhi fungsionalitas kode secara keseluruhan. Hal ini hanya merupakan perbedaan dalam penamaan variabel untuk kejelasan dan preferensi dalam pembacaan kode.
+Perbedaan utama antara langkah 1 dan langkah 3 terletak pada penggunaan `FutureGroup`. Pada langkah 1, `FutureGroup` digunakan untuk mengelola beberapa future secara paralel. Metode `add` digunakan untuk menambahkan setiap future ke dalam `FutureGroup`, dan `close` menandakan bahwa tidak ada future tambahan yang akan ditambahkan. Di sisi lain, langkah 3 menggunakan `Future.wait` untuk menggabungkan beberapa future menjadi satu future tunggal yang menunggu hingga semua future selesai.
+
+Jadi, perbedaan ini mencerminkan pendekatan berbeda dalam mengelola future secara paralel. `FutureGroup` memberikan kontrol lebih langsung terhadap setiap future, sementara `Future.wait` menyatukan hasil dari beberapa future menjadi satu setelah semuanya selesai.
