@@ -245,3 +245,43 @@ Pada langkah 5, dalam `onPressed`, setelah pemanggilan `getNumber()`, ditambahka
 
 Perbedaan ini memberikan perlindungan lebih terhadap kesalahan yang mungkin terjadi selama eksekusi asynchronous, dan dengan menangkap error menggunakan `completeError`, kita dapat memberikan penanganan yang lebih baik terhadap situasi yang tidak terduga.
 
+## Praktikum 4: Memanggil Future secara paralel
+
+### Langkah 1: Buka file `main.dart`
+```dart
+void returnFG() {
+    final futures = Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+    futures.then((value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = total.toString();
+      });
+    });
+  }
+```
+
+###  Langkah 2: Edit `onPressed()`
+```dart
+onPressed: () {
+    returnFG();
+},
+```
+
+### Langkah 3: Ganti variabel futureGroup
+```dart
+final futures = Future.wait<int>([
+  returnOneAsync(),
+  returnTwoAsync(),
+  returnThreeAsync(),
+]);
+```
+
+#### Jelaskan maksud perbedaan kode langkah 1 dan 3!
+Perbedaan antara langkah 1 dan langkah 3 terletak pada penamaan variabel yang digunakan untuk menyimpan hasil dari `Future.wait`. Pada langkah 1, variabel disebut `futures`, sedangkan pada langkah 3, variabel disebut `futureGroup`. Meskipun fungsinya sama, yaitu menyimpan hasil dari `Future.wait`, perbedaan penamaan tidak memengaruhi fungsionalitas kode secara keseluruhan. Hal ini hanya merupakan perbedaan dalam penamaan variabel untuk kejelasan dan preferensi dalam pembacaan kode.

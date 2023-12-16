@@ -48,13 +48,7 @@ class _FuturePageState extends State<FuturePage> {
             const Spacer(),
             ElevatedButton(
               onPressed: () {
-                getNumber().then((value) {
-                  setState(() {
-                    result = value.toString();
-                  });
-                }).catchError((e) {
-                  result = 'An error Occured';
-                });
+                returnFG();
               },
               child: const Text("GO!"),
             ),
@@ -113,6 +107,23 @@ class _FuturePageState extends State<FuturePage> {
     total += await returnThreeAsync();
     setState(() {
       result = total.toString();
+    });
+  }
+
+  void returnFG() {
+    final futures = Future.wait<int>([
+      returnOneAsync(),
+      returnTwoAsync(),
+      returnThreeAsync(),
+    ]);
+    futures.then((value) {
+      int total = 0;
+      for (var element in value) {
+        total += element;
+      }
+      setState(() {
+        result = total.toString();
+      });
     });
   }
 }
