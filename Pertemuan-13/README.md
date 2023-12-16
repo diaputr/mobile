@@ -176,3 +176,72 @@ ElevatedButton(
 #### Jelaskan maksud praktikum ini!
 Praktikum ini bertujuan untuk mengenalkan `async` dan `await`. Kita dapat menangani pemanggilan fungsi yang membutuhkan waktu (asynchronous) tanpa menggunakan callback yang kompleks. Dalam langkah-langkah yang diberikan, tiga fungsi `returnOneAsync`, `returnTwoAsync`, dan `returnThreeAsync` ditambahkan dengan simulasi penundaan menggunakan `await Future.delayed` untuk memperlihatkan kegunaan `await` dalam menangani operasi yang membutuhkan waktu. Selanjutnya, dibuat method baru bernama `count()` yang menggunakan `await` untuk menunggu hasil dari tiga fungsi tersebut dan kemudian menjumlahkannya. Metode ini dihubungkan dengan tombol "GO!" sehingga ketika tombol ditekan, hasil penjumlahan akan diupdate dan ditampilkan.
 
+## Praktikum 3: Menggunakan Completer di Future
+
+### Langkah 1: Buka `main.dart`
+```dart
+import 'package:async/async.dart';
+```
+
+### Langkah 2: Tambahkan variabel dan method
+```dart
+late Completer completer;
+
+Future getNumber() {
+  completer = Completer<int>();
+  calculate();
+  return completer.future;
+}
+
+Future calculate() async {
+  await Future.delayed(const Duration(seconds : 5));
+  completer.complete(42);
+}
+```
+
+### Langkah 3: Ganti isi kode `onPressed()`
+```dart
+onPressed: () {
+    getNumber().then((value) {
+        setState(() {
+            result = value.toString();
+        });
+    })
+},
+```
+
+### Langkah 4: Ganti method `calculate()`
+```dart
+calculate() async {
+    try {
+      await Future.delayed(const Duration(seconds: 5));
+      completer.complete(42);
+    } catch (e) {
+      completer.completeError({});
+    }
+  }
+```
+
+### Langkah 5: Pindah ke `onPressed()`
+```dart
+getNumber().then((value) {
+  setState(() {
+    result = value.toString();
+  });
+}).catchError((e) {
+  result = 'An error occurred';
+});
+```
+
+### Hasil
+![Screenshot 4](images/04.png)
+
+#### Jelaskan maksud perbedaan kode langkah 2 dengan langkah 4-5 tersebut!
+Pada langkah 2, variabel `completer` dideklarasikan sebagai `late Completer`, dan kemudian metode `getNumber` dan `calculate` diimplementasikan. `getNumber` menginisialisasi `completer` sebagai `Completer<int>` dan kemudian memanggil `calculate`, yang menunggu selama 5 detik menggunakan `await Future.delayed` sebelum menyelesaikan `completer` dengan nilai 42.
+
+Pada langkah 4, dalam method `calculate`, ditambahkan blok `try-catch` untuk menangkap error yang mungkin terjadi selama penundaan. Jika terjadi error, `completer` diselesaikan dengan menggunakan `completeError({})`.
+
+Pada langkah 5, dalam `onPressed`, setelah pemanggilan `getNumber()`, ditambahkan blok `catchError` untuk menangkap error yang mungkin terjadi selama eksekusi. Jika ada error, variabel `result` diupdate dengan pesan kesalahan.
+
+Perbedaan ini memberikan perlindungan lebih terhadap kesalahan yang mungkin terjadi selama eksekusi asynchronous, dan dengan menangkap error menggunakan `completeError`, kita dapat memberikan penanganan yang lebih baik terhadap situasi yang tidak terduga.
+
