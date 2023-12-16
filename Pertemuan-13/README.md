@@ -120,7 +120,11 @@ class _FuturePageState extends State<FuturePage> {
 ```
 
 #### Jelaskan terkait substring dan catchError!
+Pada bagian ini, metode `substring(0, 450)` digunakan untuk mengambil sebagian substring dari hasil respons yang diterima. Dengan parameter 0 dan 450, itu akan mengambil karakter dari indeks 0 hingga indeks 449, termasuk karakter 0 dan tidak termasuk karakter 450.
 
+Sementara itu, blok `catchError` digunakan untuk menangani kesalahan yang mungkin terjadi selama pemrosesan data. Jika ada kesalahan, blok ini akan menangkap pengecualian dan mengubah nilai `result` menjadi pesan kesalahan yang sesuai. Kemudian, dengan menggunakan `setState`, variabel `isLoading` diatur kembali ke `false` untuk menghentikan indikator loading setelah penanganan kesalahan selesai.
 
 ### Hasil
 ![Screenshot 2](images/02.jpg)
+
+## Praktikum 2: Menggunakan await/async untuk menghindari callbacks
