@@ -334,3 +334,7 @@ Future handleError() async {
 ### Hasil
 ![Screenshot 5](images/05.png)
 
+#### Jelaskan perbedaan kode langkah 1 dan 3! 
+Pada Langkah 1, sebuah fungsi asinkron (`returnError()`) didefinisikan untuk memberikan respon error setelah beberapa waktu tertentu. Fungsi ini kemudian dipanggil dari dalam `onPressed` pada ElevatedButton pada Langkah 2 menggunakan `then` dan `catchError` untuk menangani hasil sukses atau kesalahan.
+
+Pada Langkah 3, metode baru bernama `handleError()` ditambahkan. Metode ini menggunakan struktur `try`, `catch`, dan `finally` untuk menangani potensi kesalahan yang mungkin terjadi saat memanggil `returnError()`. Dengan menggunakan `try`, program mencoba mengeksekusi `returnError()`. Jika terjadi kesalahan, blok `catch` akan menangkap dan menangani kesalahan tersebut, yang pada gilirannya mengubah nilai variabel `result` yang diteruskan ke antarmuka pengguna. Blok `finally` akan selalu dijalankan, terlepas dari kesalahan atau tidaknya, untuk mengeksekusi kode yang perlu dilakukan setelah blok `try` dan/atau `catch` selesai.
