@@ -287,3 +287,50 @@ final futures = Future.wait<int>([
 Perbedaan utama antara langkah 1 dan langkah 3 terletak pada penggunaan `FutureGroup`. Pada langkah 1, `FutureGroup` digunakan untuk mengelola beberapa future secara paralel. Metode `add` digunakan untuk menambahkan setiap future ke dalam `FutureGroup`, dan `close` menandakan bahwa tidak ada future tambahan yang akan ditambahkan. Di sisi lain, langkah 3 menggunakan `Future.wait` untuk menggabungkan beberapa future menjadi satu future tunggal yang menunggu hingga semua future selesai.
 
 Jadi, perbedaan ini mencerminkan pendekatan berbeda dalam mengelola future secara paralel. `FutureGroup` memberikan kontrol lebih langsung terhadap setiap future, sementara `Future.wait` menyatukan hasil dari beberapa future menjadi satu setelah semuanya selesai.
+
+## Praktikum 5: Menangani Respon Error pada Async Code
+
+### Langkah 1: Buka file `main.dart`
+```dart
+  Future returnError() async {
+    await Future.delayed(const Duration(seconds: 2));
+    throw Exception('Error');
+  }
+```
+
+### Langkah 2: ElevatedButton
+```dart
+ElevatedButton(
+  onPressed: () {
+    returnError().then((value) {
+      setState(() {
+        result = 'Success';
+        });
+        }).catchError((onError) {
+          setState(() {
+            result = onError.toString();
+        });
+      }).whenComplete(() => print('Completed'));
+   },
+   child: const Text("GO!"),
+ ),
+```
+
+### Langkah 3: Tambah method `handleError()`
+```dart
+Future handleError() async {
+    try {
+      await returnError();
+    } catch (error) {
+      setState(() {
+        result = error.toString();
+      });
+    } finally {
+      print('Completed');
+    }
+  }
+```
+
+### Hasil
+![Screenshot 5](images/05.png)
+
