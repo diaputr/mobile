@@ -338,3 +338,82 @@ Future handleError() async {
 Pada Langkah 1, sebuah fungsi asinkron (`returnError()`) didefinisikan untuk memberikan respon error setelah beberapa waktu tertentu. Fungsi ini kemudian dipanggil dari dalam `onPressed` pada ElevatedButton pada Langkah 2 menggunakan `then` dan `catchError` untuk menangani hasil sukses atau kesalahan.
 
 Pada Langkah 3, metode baru bernama `handleError()` ditambahkan. Metode ini menggunakan struktur `try`, `catch`, dan `finally` untuk menangani potensi kesalahan yang mungkin terjadi saat memanggil `returnError()`. Dengan menggunakan `try`, program mencoba mengeksekusi `returnError()`. Jika terjadi kesalahan, blok `catch` akan menangkap dan menangani kesalahan tersebut, yang pada gilirannya mengubah nilai variabel `result` yang diteruskan ke antarmuka pengguna. Blok `finally` akan selalu dijalankan, terlepas dari kesalahan atau tidaknya, untuk mengeksekusi kode yang perlu dilakukan setelah blok `try` dan/atau `catch` selesai.
+
+## Praktikum 6: Menggunakan Future dengan StatefulWidget
+
+### Langkah 1: install plugin geolocator
+```dart
+flutter pub add geolocator
+```
+
+### Langkah 2: Tambah permission GPS
+Untuk platform Android, maka tambahkan baris kode berikut di file `android/app/src/main/androidmanifest.xml`
+```dart
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+```
+
+Untuk platform iOS, maka tambahkan kode ini ke file `Info.plist`
+```dart
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs to access your location</string>
+```
+### Langkah 3: Buat file geolocation.dart
+```dart
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+
+class LocationScreen extends StatefulWidget {
+  const LocationScreen({super.key});
+
+  @override
+  State<LocationScreen> createState() => _LocationScreenState();
+}
+
+class _LocationScreenState extends State<LocationScreen> {
+  String myPosition = '';
+
+  @override
+  void initState() {
+    super.initState();
+    getPosition().then((Position myPos) {
+      setState(() {
+        myPosition =
+            'Latitude: ${myPos.latitude.toString()} - Longitude: ${myPos.longitude.toString()}';
+      });
+    });
+  }
+
+  Future<Position> getPosition() async {
+    await Geolocator.requestPermission();
+    await Geolocator.isLocationServiceEnabled();
+    await Future.delayed(const Duration(seconds: 3));
+    Position? position = await Geolocator.getCurrentPosition();
+    return position;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final myWidget =
+        myPosition == '' ? const CircularProgressIndicator() : Text(myPosition);
+    ;
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Current Location Puput")),
+      body: Center(
+        child: myWidget,
+      ),
+    );
+  }
+}
+```
+
+## Hasil
+![Screenshot 6](images/06.png)
+
+#### Apakah didapatkan koordinat GPS ketika run di browser? Mengapa demikian?
+
+
+## 
+
+### 
