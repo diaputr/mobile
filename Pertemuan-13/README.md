@@ -468,3 +468,17 @@ Widget build(BuildContext context){
 ### Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
 ![Screenshot 7](images/07.png)
 * Seperti yang dapat dilihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
+
+### Langkah 5: Tambah handling error
+```dart
+else if(snapshot.connectionState == ConnectionState.done){
+  if(snapshot.hasError){
+    return Text('Something terrible happened!');
+  }
+  return Text(snapshot.data.toString());
+}
+```
+
+#### Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian?
+
+##
