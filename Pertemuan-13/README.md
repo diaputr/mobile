@@ -414,6 +414,57 @@ class _LocationScreenState extends State<LocationScreen> {
 #### Apakah didapatkan koordinat GPS ketika run di browser? Mengapa demikian?
 
 
-## 
+## Praktikum 7: Manajemen Future dengan FutureBuilder
 
-### 
+### Langkah 1: Modifikasi method `getPosition()`
+```dart
+Future<Position> getPosition() async{
+  await Geolocator.isLocationServiceEnabled();
+  await Future.delayed(const Duration(seconds: 3));
+  Position position = await Geolocator.getCurrentPosition();
+  return position;
+}
+```
+
+### Langkah 2: Tambah variabel di class `_LocationScreenState`
+```dart
+Future<Position>? position;
+```
+
+### Langkah 3: Tambah `initState()`
+```dart
+@override
+void initState(){
+  super.initState();
+  position = getPosition();
+}
+```
+
+### Langkah 4: Edit method `build()`
+```dart
+@override
+Widget build(BuildContext context){
+  return Scaffold(
+    appBar: AppBar(title: Text('Current Location')),
+    body: Center(child: FutureBuilder(
+      future: position,
+      builder: (BuildContext context, AsyncSnapshot<Position> snapshot){
+        if(snapshot.connectionState == ConnectionState.waiting){
+          return const CircularProgressIndicator();
+        }
+        else if(snapshot.connectionState == ConnectionState.done){
+          return Text(snapshot.data.toString());
+        }
+        else{
+          return const Text('');
+        }
+      },
+    ),
+  ));
+}
+```
+
+
+### Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
+![Screenshot 7](images/07.png)
+* Seperti yang dapat dilihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
