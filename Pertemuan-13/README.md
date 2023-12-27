@@ -482,3 +482,100 @@ else if(snapshot.connectionState == ConnectionState.done){
 #### Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian?
 
 ## Praktikum 8: Navigation route dengan Future Function
+
+### Langkah 1: Buat file baru `navigation_first.dart`
+```dart
+import 'package:flutter/material.dart';
+import 'package:books/navigation_second.dart';
+
+class NavigationFirst extends StatefulWidget {
+  const NavigationFirst({super.key});
+
+  @override
+  State<NavigationFirst> createState() => _NavigationFirstState();
+}
+
+class _NavigationFirstState extends State<NavigationFirst> {
+  Color color = Colors.blue;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: color,
+      appBar: AppBar(
+        title: const Text('Navigation First Screen Puput'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Change Color'),
+          onPressed: () {
+            _navigateAndGetColor(context);
+          },
+        ),
+      ),
+    );
+  }
+
+  Future _navigateAndGetColor(BuildContext context) async {
+    color = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const NavigationSecond()),
+        ) ??
+        Colors.blue;
+    setState(() {});
+  }
+}
+```
+
+### Langkah 2: Buat file baru `navigation_second.dart`
+```dart
+import 'package:flutter/material.dart';
+
+class NavigationSecond extends StatefulWidget {
+  const NavigationSecond({Key? key}) : super(key: key);
+
+  @override
+  _NavigationSecondState createState() => _NavigationSecondState();
+}
+
+class _NavigationSecondState extends State<NavigationSecond> {
+  @override
+  Widget build(BuildContext context) {
+    Color color;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Navigation Second Screen Puput'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+              child: const Text('Red'),
+              onPressed: () {
+                color = Colors.red;
+                Navigator.pop(context, color);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Green'),
+              onPressed: () {
+                color = Colors.green;
+                Navigator.pop(context, color);
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Blue'),
+              onPressed: () {
+                color = Colors.blue;
+                Navigator.pop(context, color);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+```
+
+#### Cobalah klik setiap button, apa yang terjadi? Mengapa demikian?
