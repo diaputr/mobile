@@ -412,7 +412,7 @@ class _LocationScreenState extends State<LocationScreen> {
 ![Screenshot 6](images/06.png)
 
 #### Apakah didapatkan koordinat GPS ketika run di browser? Mengapa demikian?
-
+Ketika menjalankan aplikasi Flutter di browser, koordinat GPS masih dapat diperoleh meskipun tidak ditambahkan izin secara langsung ke AndroidManifest. Hal ini disebabkan oleh Flutter web yang menggunakan API Geolocation langsung dari browser, dan izin untuk mengakses lokasi dikelola oleh browser tersebut, bukan oleh sistem operasi. Sehingga, izin akses lokasi akan dikelola oleh browser yang digunakan dan koordinat GPS dapat diperoleh sesuai dengan izin yang diberikan oleh pengguna melalui browser.
 
 ## Praktikum 7: Manajemen Future dengan FutureBuilder
 
@@ -464,11 +464,6 @@ Widget build(BuildContext context){
 }
 ```
 
-
-### Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
-![Screenshot 7](images/07.png)
-* Seperti yang dapat dilihat, menggunakan FutureBuilder lebih efisien, clean, dan reactive dengan Future bersama UI.
-
 ### Langkah 5: Tambah handling error
 ```dart
 else if(snapshot.connectionState == ConnectionState.done){
@@ -479,7 +474,10 @@ else if(snapshot.connectionState == ConnectionState.done){
 }
 ```
 
-#### Apakah ada perbedaan UI dengan langkah sebelumnya? Mengapa demikian?
+### Apakah ada perbedaan UI dengan praktikum sebelumnya? Mengapa demikian?
+![Screenshot 7](images/07.png)
+
+Pada praktikum sebelumnya, UI menunjukkan tampilan loading menggunakan CircularProgressIndicator di tengah layar selama aplikasi menunggu hasil dari pemanggilan fungsi `getPosition()`. Sementara itu, dalam langkah-langkah dengan `FutureBuilder`, UI menjadi lebih responsif dan bersih, yang akan menampilkan tampilan loading saat menunggu, kemudian menampilkan hasil atau pesan kesalahan setelah pemanggilan fungsi selesai.
 
 ## Praktikum 8: Navigation route dengan Future Function
 
@@ -579,8 +577,10 @@ class _NavigationSecondState extends State<NavigationSecond> {
 ```
 
 ### Hasil
+![Screenshot 8](images/08.png)
 
 #### Cobalah klik setiap button, apa yang terjadi? Mengapa demikian?
+Ketika tombol ditekan, perubahan akan terjadi pada warnanya sesuai dengan konfigurasi yang telah didefinisikan dalam `ElevatedButton()` di dalam kelas `navigation_second.dart`. Hal ini terjadi karena terdapat fungsi `Navigation.pop()` yang dipanggil pada setiap tombol dengan menggunakan parameter berupa konteks dan warna yang telah ditetapkan sebelumnya. Oleh karena itu, setiap kali tombol ditekan, warna yang muncul akan berubah sesuai dengan nilai variabel warna yang telah diatur sebelumnya.
 
 ## Praktikum 9: Memanfaatkan async/await dengan Widget Dialog
 
@@ -651,5 +651,7 @@ class _NavigationDialogScreenState extends State<NavigationDialogScreen> {
 ```
 
 ### Hasil
+![Screenshot 9](images/09.png)
 
 #### Cobalah klik setiap button, apa yang terjadi? Mengapa demikian?
+Ketika tombol **Change Color** ditekan dan suatu warna dipilih dari dialog, hasilnya adalah perubahan warna latar belakang layar sesuai dengan pilihan yang dibuat pada dialog tersebut. Mekanisme ini terjadi karena nilai variabel color diperbarui dengan warna yang dipilih melalui fungsi `_showColorDialog`, dan selanjutnya, widget diperbarui menggunakan ``setState``. Proses ini mengakibatkan widget dibangun kembali, dan hasilnya adalah tampilan layar yang memperlihatkan perubahan warna yang telah dipilih.
